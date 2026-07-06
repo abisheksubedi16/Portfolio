@@ -1,0 +1,1367 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abhisek Subedi | Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ==========================================================================
+           DESIGN SYSTEM & VARIABLES
+           ========================================================================== */
+      :root[data-theme="dark"] {
+        --bg-primary: #0a192f;
+        --bg-surface: #112240;
+        --bg-surface-hover: #1d3557;
+        --text-primary: #ccd6f6;
+        --text-secondary: #8892b0;
+        --accent: #3b82f6;
+        --accent-glow: rgba(59, 130, 246, 0.15);
+        --border-color: rgba(204, 214, 246, 0.1);
+        --modal-overlay: rgba(10, 25, 47, 0.85);
+        --nav-bg: rgba(10, 25, 47, 0.75);
+      }
+
+      :root[data-theme="light"] {
+        --bg-primary: #f8fafc;
+        --bg-surface: #ffffff;
+        --bg-surface-hover: #f1f5f9;
+        --text-primary: #0f172a;
+        --text-secondary: #475569;
+        --accent: #3b82f6;
+        --accent-glow: rgba(59, 130, 246, 0.1);
+        --border-color: rgba(15, 23, 42, 0.1);
+        --modal-overlay: rgba(248, 250, 252, 0.9);
+        --nav-bg: rgba(248, 250, 252, 0.8);
+      }
+
+      /* Global Reset & Base Typography */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease,
+          border-color 0.3s ease;
+      }
+
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        line-height: 1.6;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      h1,
+      h2,
+      h3,
+      h4,
+      .font-heading {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      button {
+        cursor: pointer;
+        border: none;
+        background: none;
+        font-family: inherit;
+      }
+
+      /* Layout Utilities (8pt / rem Grid) */
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+      }
+
+      .section-padding {
+        padding: 6rem 0;
+      }
+
+      .grid {
+        display: grid;
+        gap: 2rem;
+      }
+
+      /* Utilities */
+      .text-accent {
+        color: var(--accent);
+      }
+      .text-muted {
+        color: var(--text-secondary);
+      }
+
+      /* Component Transitions */
+      .hover-lift {
+        transition:
+          transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+          box-shadow 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px -10px var(--accent-glow);
+      }
+
+      /* ==========================================================================
+           1. NAVIGATION
+           ========================================================================== */
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background-color: var(--nav-bg);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .nav-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 4.5rem;
+      }
+
+      .logo {
+        font-size: 1.25rem;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+      }
+
+      .theme-toggle {
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.5rem;
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+      }
+      .theme-toggle:hover {
+        background-color: var(--bg-surface);
+      }
+      .theme-toggle svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+      [data-theme="dark"] .sun-icon,
+      [data-theme="light"] .moon-icon {
+        display: none;
+      }
+
+      /* ==========================================================================
+           2. HERO SECTION — PICTURE ON TOP, CONTENT BELOW
+           ========================================================================== */
+      .hero {
+        position: relative;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding-top: 4.5rem;
+        overflow: hidden;
+      }
+
+      .hero-grid {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 2rem;
+        padding: 2rem 0 3rem;
+      }
+
+      .hero-content {
+        z-index: 2;
+        text-align: center;
+        max-width: 720px;
+      }
+
+      .hero-tagline {
+        font-size: 1.1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.75rem;
+        font-weight: 600;
+      }
+
+      .hero-title {
+        font-size: clamp(2.5rem, 5vw, 4.5rem);
+        line-height: 1.1;
+        margin-bottom: 1.25rem;
+      }
+
+      .hero-desc {
+        font-size: clamp(1.1rem, 2vw, 1.25rem);
+        color: var(--text-secondary);
+        max-width: 38rem;
+        margin: 0 auto 2.5rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.875rem 1.75rem;
+        font-weight: 500;
+        border-radius: 0.375rem;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+      }
+
+      .btn-primary {
+        background-color: var(--accent);
+        color: #ffffff;
+      }
+      .btn-primary:hover {
+        background-color: #2563eb;
+        transform: translateY(-1px);
+      }
+
+      /* Profile Image Container — now at top */
+      .hero-image-wrapper {
+        display: flex;
+        justify-content: center;
+        z-index: 2;
+        margin-bottom: 0.5rem;
+      }
+
+      .profile-frame {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        padding: 3px;
+        background: linear-gradient(135deg, #003893, #dc143c);
+        flex-shrink: 0;
+      }
+
+      .profile-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        background-color: var(--bg-surface);
+        display: block;
+      }
+
+      /* Faint Mountain Silhouette */
+      .mountain-silhouette {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        pointer-events: none;
+        z-index: 1;
+        opacity: 0.04;
+        color: var(--text-primary);
+      }
+      [data-theme="light"] .mountain-silhouette {
+        opacity: 0.06;
+      }
+
+      /* ==========================================================================
+           3. FLOATING MODAL ("MORE ABOUT ME")
+           ========================================================================== */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--modal-overlay);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1.5rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .modal-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .modal-wrapper {
+        background-color: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: 0.75rem;
+        width: 100%;
+        max-width: 800px;
+        max-height: 85vh;
+        overflow-y: auto;
+        position: relative;
+        transform: translateY(30px);
+        transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.3);
+      }
+
+      .modal-overlay.active .modal-wrapper {
+        transform: translateY(0);
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 1.25rem;
+        right: 1.25rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: var(--bg-primary);
+        border: 1px solid var(--border-color);
+        color: var(--text-primary);
+        z-index: 10;
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+
+      .modal-body {
+        padding: 2.5rem;
+      }
+
+      .modal-header-meta {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      @media (min-width: 640px) {
+        .modal-header-meta {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+      .meta-item label {
+        display: block;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-secondary);
+        margin-bottom: 0.25rem;
+      }
+
+      .meta-item p {
+        font-weight: 500;
+        font-size: 1rem;
+      }
+
+      .modal-bio h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .modal-bio p {
+        color: var(--text-secondary);
+        margin-bottom: 1.25rem;
+        font-size: 1.05rem;
+      }
+
+      /* ==========================================================================
+           4. TYPING ANIMATION SECTION
+           ========================================================================== */
+      .typing-section {
+        background-color: var(--bg-surface);
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+        padding: 3.5rem 0;
+        text-align: center;
+      }
+
+      .typing-container {
+        font-size: clamp(1.5rem, 3vw, 2.25rem);
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 500;
+      }
+
+      .typed-cursor {
+        opacity: 1;
+        animation: blink 0.7s infinite;
+        color: var(--accent);
+        margin-left: 4px;
+      }
+
+      @keyframes blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      /* ==========================================================================
+           5. CORE STRENGTHS SECTION
+           ========================================================================== */
+      .section-title {
+        font-size: clamp(2rem, 4vw, 2.75rem);
+        margin-bottom: 3.5rem;
+        text-align: center;
+      }
+
+      .strengths-grid {
+        grid-template-columns: 1fr;
+      }
+
+      @media (min-width: 640px) {
+        .strengths-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .strengths-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      .strength-card {
+        background-color: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        padding: 2rem;
+      }
+
+      .strength-icon {
+        color: var(--accent);
+        margin-bottom: 1.25rem;
+        display: inline-block;
+        font-size: 1.75rem;
+      }
+
+      .strength-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+      }
+
+      .strength-card ul {
+        list-style: none;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+
+      .strength-card ul li {
+        margin-bottom: 0.5rem;
+        position: relative;
+        padding-left: 1.25rem;
+      }
+
+      .strength-card ul li::before {
+        content: "→";
+        position: absolute;
+        left: 0;
+        color: var(--accent);
+      }
+
+      /* ==========================================================================
+           6. ACADEMIC JOURNEY SECTION
+           ========================================================================== */
+      .timeline {
+        position: relative;
+        max-width: 800px;
+        margin: 0 auto;
+        padding-left: 2rem;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 7px;
+        height: 100%;
+        width: 2px;
+        background-color: var(--border-color);
+      }
+
+      .timeline-item {
+        position: relative;
+        margin-bottom: 3rem;
+      }
+
+      .timeline-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .timeline-node {
+        position: absolute;
+        left: -2rem;
+        top: 0.35rem;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: var(--bg-primary);
+        border: 2px solid var(--accent);
+        z-index: 2;
+      }
+
+      .timeline-content {
+        background-color: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        padding: 1.75rem;
+      }
+
+      .timeline-date {
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--accent);
+        margin-bottom: 0.5rem;
+      }
+
+      .timeline-content h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.25rem;
+      }
+
+      .timeline-institution {
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+
+      /* ==========================================================================
+           7. BEYOND THE SCREEN
+           ========================================================================== */
+      .beyond-grid {
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 640px) {
+        .beyond-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (min-width: 1024px) {
+        .beyond-grid {
+          grid-template-columns: repeat(4, 1fr);
+        }
+      }
+
+      .beyond-card {
+        background-color: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        border-radius: 0.5rem;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .beyond-card svg {
+        width: 2rem;
+        height: 2rem;
+        fill: none;
+        stroke: var(--accent);
+        stroke-width: 1.5;
+        margin-bottom: 1rem;
+      }
+
+      .beyond-card h3 {
+        font-size: 1.15rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .beyond-card p {
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+      }
+
+      /* ==========================================================================
+           8. CREATIVE KEYWORD WALL
+           ========================================================================== */
+      .keyword-section {
+        background-color: var(--bg-primary);
+        position: relative;
+        min-height: 80vh;
+        overflow: hidden;
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .keyword-wall-container {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+      }
+
+      .floating-keyword {
+        position: absolute;
+        white-space: nowrap;
+        user-select: none;
+        font-family: "Space Grotesk", sans-serif;
+        animation: float-around 20s ease-in-out infinite alternate;
+      }
+
+      @keyframes float-around {
+        0% {
+          transform: translateY(0px) translateX(0px);
+        }
+        50% {
+          transform: translateY(-15px) translateX(10px);
+        }
+        100% {
+          transform: translateY(10px) translateX(-10px);
+        }
+      }
+
+      /* ==========================================================================
+           9. CONTACT & FOOTER
+           ========================================================================== */
+      .contact-section {
+        text-align: center;
+        max-width: 600px;
+        margin: 0 auto;
+      }
+
+      .contact-section p {
+        color: var(--text-secondary);
+        font-size: 1.1rem;
+        margin-bottom: 2.5rem;
+      }
+
+      .social-links {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        margin-bottom: 4rem;
+      }
+
+      .social-icon {
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        background-color: var(--bg-surface);
+        border: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--text-primary);
+        transition: all 0.2s ease;
+      }
+
+      .social-icon:hover {
+        color: var(--accent);
+        border-color: var(--accent);
+        transform: scale(1.05);
+      }
+
+      .social-icon svg {
+        width: 1.25rem;
+        height: 1.25rem;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+      }
+
+      footer {
+        border-top: 1px solid var(--border-color);
+        padding: 2.5rem 0;
+        text-align: center;
+        font-size: 0.9rem;
+        color: var(--text-secondary);
+      }
+
+      /* Global Entry Animation Script Enhancements */
+      .scroll-reveal {
+        opacity: 0;
+        transform: translateY(20px);
+        transition:
+          opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1),
+          transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      }
+      .scroll-reveal.revealed {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* Responsive fine-tuning for hero image */
+      @media (max-width: 480px) {
+        .profile-frame {
+          width: 160px;
+          height: 160px;
+        }
+        .hero-grid {
+          gap: 1.5rem;
+          padding: 1.5rem 0 2rem;
+        }
+      }
+      @media (min-width: 768px) {
+        .profile-frame {
+          width: 220px;
+          height: 220px;
+        }
+      }
+      @media (min-width: 1024px) {
+        .profile-frame {
+          width: 240px;
+          height: 240px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="container nav-container">
+        <a href="#" class="logo">Abhisek Subedi</a>
+        <button
+          class="theme-toggle"
+          id="themeToggle"
+          aria-label="Toggle structural interface dynamic theme"
+        >
+          <svg class="sun-icon" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="4.22" x2="19.78" y2="5.64"></line>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="container hero-grid">
+        <!-- PICTURE FIRST — at the top -->
+        <div class="hero-image-wrapper">
+          <div class="profile-frame">
+            <img
+              src="image/portfolioimg.webp"
+              alt="Abhisek Subedi profile photo"
+              class="profile-img"
+            />
+          </div>
+        </div>
+
+        <!-- CONTENT BELOW — name, tagline, description, button -->
+        <div class="hero-content">
+          <div class="hero-tagline text-accent">It's</div>
+          <h1 class="hero-title">Abhisek Subedi</h1>
+          <p class="hero-desc">
+           Software engineering student who builds clean, efficient applications.
+I bring full-stack skills, AI tools, and a designer’s eye to real-world projects.
+Off screen, I channel that same structured energy into the gym, music, hardware, and sports.
+
+
+          </p>
+          <button class="btn btn-primary" id="openModalBtn">
+            More About Me
+          </button>
+        </div>
+      </div>
+
+      <svg
+        class="mountain-silhouette"
+        viewBox="0 0 1440 200"
+        preserveAspectRatio="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0,160 L120,130 L240,170 L360,110 L480,140 L600,80 L720,120 L840,90 L960,150 L1080,100 L1200,130 L1320,70 L1440,110 L1440,200 L0,200 Z"
+          fill="currentColor"
+        ></path>
+      </svg>
+    </header>
+
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal-wrapper">
+        <button
+          class="modal-close"
+          id="closeModalBtn"
+          aria-label="Close interface information frame"
+        >
+          ✕
+        </button>
+        <div class="modal-body">
+          <div class="modal-header-meta">
+            <div class="meta-item">
+              <label>Name</label>
+              <p>Abhisek Subedi</p>
+            </div>
+            <div class="meta-item">
+              <label>Currently</label>
+              <p>Software Engineering Student</p>
+            </div>
+            <div class="meta-item">
+              <label>Location</label>
+              <p>Pokhara, Nepal</p>
+            </div>
+            <div class="meta-item">
+              <label>College</label>
+              <p>Gandaki College of Engineering & Science</p>
+            </div>
+            <div class="meta-item">
+              <label>Primary Ecosystem</label>
+              <p>Mac OS (Apple Architecture)</p>
+            </div>
+            <div class="meta-item">
+              <label>Languages</label>
+              <p>
+                Nepali (Native), English (Fluent), Hindi (Fluent), Spanish
+                (Learning)
+              </p>
+            </div>
+            <div class="meta-item">
+              <label>Contact Email</label>
+              <p>comingsoon@domain.com</p>
+            </div>
+            <div class="meta-item">
+              <label>Contact Number</label>
+              <p>+977-9768000420</p>
+            </div>
+          </div>
+          <div class="modal-bio">
+            <h3>Software Engineering Student & Developer</h3>
+            <p>
+              I am a disciplined Software Engineering student focused on
+              building clean, efficient software. I have practical experience in
+              frontend architecture and backend development using Node.js,
+              MongoDB, and PHP.
+            </p>
+            <p>
+              My project history includes developing full Point of Sale (POS)
+              systems and responsive web applications for businesses. To speed
+              up my workflow and debug code more effectively, I regularly
+              integrate AI tools and automation into my development process.
+            </p>
+            <p>
+              Beyond coding, I have hands-on experience with multimedia design
+              tools like DaVinci Resolve, Adobe Photoshop, and Illustrator to
+              create and scale digital assets. Outside of tech, I apply the same
+              structured, analytical mindset to Gym, cricket, robotics , and
+              automotive mechanics.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <section class="typing-section">
+      <div class="container">
+        <div class="typing-container">
+          <span id="typedText" class="text-accent"></span
+          ><span class="typed-cursor">|</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-padding container scroll-reveal">
+      <h2 class="section-title">Core Skill</h2>
+      <div class="grid strengths-grid">
+        <div class="strength-card hover-lift">
+          <div class="strength-icon">⚡</div>
+          <h3>Frontend Engineering</h3>
+          <ul>
+            <li>HTML5 / Semantics</li>
+            <li>Advanced CSS / Tailwind CSS</li>
+            <li>Modern JavaScript Ecosystem</li>
+            <li>React Core / Component Design</li>
+          </ul>
+        </div>
+        <div class="strength-card hover-lift">
+          <div class="strength-icon">📂</div>
+          <h3>Backend Familiarity</h3>
+          <ul>
+            <li>Node.js / PHP</li>
+            <li>MongoDB Data Structuring</li>
+            <li>PHP Application Management</li>
+            <li>RESTful API Interfacing</li>
+          </ul>
+        </div>
+        <div class="strength-card hover-lift">
+          <div class="strength-icon">🎨</div>
+          <h3>Visual Craft</h3>
+          <ul>
+            <li>DaVinci Resolve Assembly</li>
+            <li>Photoshop Asset Scaling</li>
+            <li>Illustrator Vector Control</li>
+            <li>PowerPoint Presentation Desing</li>
+          </ul>
+        </div>
+        <div class="strength-card hover-lift">
+          <div class="strength-icon">🤖</div>
+          <h3>AI & Acceleration</h3>
+          <ul>
+            <li>AI Workflows Integration</li>
+            <li>Automated Optimization Protocols</li>
+            <li>High-velocity Iterative Workflows</li>
+            <li>Vibe Coding</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-padding container scroll-reveal">
+      <h2 class="section-title">Academic Milestones</h2>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">UnderGraduate (running)</div>
+            <h3>Bachelors in Software Engineering</h3>
+            <p class="timeline-institution">
+              Gandaki College of Engineering & Science — Lamachaur-16, Pokhara
+            </p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">High-School</div>
+            <h3>+2 Science (Computer Science & Mathematics)</h3>
+            <p class="timeline-institution">
+              Global Collegiate School — Ranipauwa, Pokhara
+            </p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Class 3 to 10</div>
+            <h3>Global Collegiate School</h3>
+            <p class="timeline-institution">Ranipauwa, Pokhara</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-node"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Early Education Foundations</div>
+            <h3>Three Angels School | Pokhara United school</h3>
+            <p class="timeline-institution">Pokhara, Nepal</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-padding container scroll-reveal">
+      <h2 class="section-title">Off-Screen Skills</h2>
+      <div class="grid beyond-grid">
+        <div class="beyond-card hover-lift">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M4 13c0-4.5 3.5-8 8-8s8 3.5 8 8-3.5 8-8 8c-1.5 0-2.8-.4-4-1.1L4 21l1.8-4.5C5.3 15.5 4 14.3 4 13z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <circle cx="9" cy="13" r="0.8" fill="currentColor" stroke="none" />
+            <circle cx="12" cy="13" r="0.8" fill="currentColor" stroke="none" />
+            <circle cx="15" cy="13" r="0.8" fill="currentColor" stroke="none" />
+          </svg>
+          <h3>Communication</h3>
+          <p>
+            Trilingual speaker with native fluency in Nepali, Good proficiency
+            in English and Hindi, and currently learning Spanish.
+          </p>
+        </div>
+        <div class="beyond-card hover-lift">
+          <svg viewBox="0 0 24 24">
+            <line x1="7" y1="12" x2="17" y2="12" stroke-linecap="round" />
+            <path
+              d="M4 8h4v8H4V8z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M16 8h4v8h-4V8z"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <h3>Fitness and diet</h3>
+          <p>
+            Backed by over three years of dedicated gym experience. Deeply
+            familiar with exercise mechanics, physical training techniques, and
+            structuring personal nutrition and diet plans.
+          </p>
+        </div>
+        <div class="beyond-card hover-lift">
+          <svg viewBox="0 0 24 24">
+            <rect
+              x="5"
+              y="5"
+              width="14"
+              height="14"
+              rx="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <rect
+              x="8"
+              y="8"
+              width="8"
+              height="8"
+              rx="0.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <line x1="9" y1="2" x2="9" y2="4" stroke-linecap="round" />
+            <line x1="15" y1="2" x2="15" y2="4" stroke-linecap="round" />
+            <line x1="9" y1="20" x2="9" y2="22" stroke-linecap="round" />
+            <line x1="15" y1="20" x2="15" y2="22" stroke-linecap="round" />
+            <line x1="2" y1="9" x2="4" y2="9" stroke-linecap="round" />
+            <line x1="2" y1="15" x2="4" y2="15" stroke-linecap="round" />
+            <line x1="20" y1="9" x2="22" y2="9" stroke-linecap="round" />
+            <line x1="20" y1="15" x2="22" y2="15" stroke-linecap="round" />
+          </svg>
+          <h3>Hardware Maintenance</h3>
+          <p>
+            Capable of troubleshooting and repairing basic computer hardware.
+            Skilled at identifying, upgrading, and maintaining essential tech
+            parts to keep everyday devices running smoothly.
+          </p>
+        </div>
+        <div class="beyond-card hover-lift">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <!-- Eighth Notes / Music Symbol -->
+            <path d="M9 18V5l12-2v13" />
+            <circle cx="6" cy="18" r="3" />
+            <circle cx="18" cy="16" r="3" />
+          </svg>
+
+          <h3>Music</h3>
+          <p>
+            Semi-Skilled in Madal, alongside beginner proficiency on the flute.
+            Experienced in utilizing Logic Pro for audio enhancement and music
+            production, with a continuous drive to learn new instruments and
+            techniques.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="keyword-section">
+      <div class="keyword-wall-container" id="keywordWall"></div>
+    </section>
+
+    <section class="section-padding container scroll-reveal contact-section">
+      <h2 class="section-title">Let's Connect</h2>
+      <p>Connect • Collaborate •Build</p>
+      <div class="social-links">
+        <a
+          href="https://www.linkedin.com/in/abhisek-subedi-a741033a7/"
+          class="social-icon"
+          aria-label="LinkedIn Professional Interface"
+          ><svg viewBox="0 0 24 24">
+            <path
+              d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+            ></path>
+            <rect x="2" y="9" width="4" height="12"></rect>
+            <circle cx="4" cy="4" r="2"></circle></svg
+        ></a>
+        <a
+          href="https://github.com/abisheksubedi16"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-icon"
+          aria-label="GitHub Profile"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+            <g fill="#181616">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M64 5.103c-33.347 0-60.388 27.035-60.388 60.388 0 26.682 17.303 49.317 41.297 57.303 3.017.56 4.125-1.31 4.125-2.905 0-1.44-.056-6.197-.082-11.243-16.8 3.653-20.345-7.125-20.345-7.125-2.747-6.98-6.705-8.836-6.705-8.836-5.48-3.748.413-3.67.413-3.67 6.063.425 9.257 6.223 9.257 6.223 5.386 9.23 14.127 6.562 17.573 5.02.542-3.903 2.107-6.568 3.834-8.076-13.413-1.525-27.514-6.704-27.514-29.843 0-6.593 2.36-11.98 6.223-16.21-.628-1.52-2.695-7.662.584-15.98 0 0 5.07-1.623 16.61 6.19C53.7 35 58.867 34.327 64 34.304c5.13.023 10.3.694 15.127 2.033 11.526-7.813 16.59-6.19 16.59-6.19 3.287 8.317 1.22 14.46.593 15.98 3.872 4.23 6.215 9.617 6.215 16.21 0 23.194-14.127 28.3-27.574 29.796 2.167 1.874 4.097 5.55 4.097 11.183 0 8.08-.07 14.583-.07 16.572 0 1.607 1.088 3.49 4.148 2.897 23.98-7.994 41.263-30.622 41.263-57.294C124.388 32.14 97.35 5.104 64 5.104z"
+              />
+              <path
+                d="M26.484 91.806c-.133.3-.605.39-1.035.185-.44-.196-.685-.605-.543-.906.13-.31.603-.395 1.04-.188.44.197.69.61.537.91zm2.446 2.729c-.287.267-.85.143-1.232-.28-.396-.42-.47-.983-.177-1.254.298-.266.844-.14 1.24.28.394.426.472.984.17 1.255zM31.312 98.012c-.37.258-.976.017-1.35-.52-.37-.538-.37-1.183.01-1.44.373-.258.97-.025 1.35.507.368.545.368 1.19-.01 1.452zm3.261 3.361c-.33.365-1.036.267-1.552-.23-.527-.487-.674-1.18-.343-1.544.336-.366 1.045-.264 1.564.23.527.486.686 1.18.333 1.543zm4.5 1.951c-.147.473-.825.688-1.51.486-.683-.207-1.13-.76-.99-1.238.14-.477.823-.7 1.512-.485.683.206 1.13.756.988 1.237zm4.943.361c.017.498-.563.91-1.28.92-.723.017-1.308-.387-1.315-.877 0-.503.568-.91 1.29-.924.717-.013 1.306.387 1.306.88zm4.598-.782c.086.485-.413.984-1.126 1.117-.7.13-1.35-.172-1.44-.653-.086-.498.422-.997 1.122-1.126.714-.123 1.354.17 1.444.663zm0 0"
+              />
+            </g>
+          </svg>
+        </a>
+        <a
+          href="tel:+9779768000420"
+          class="social-icon"
+          aria-label="Phone Call"
+        >
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+            ></path>
+          </svg>
+        </a>
+        <a href="https://www.instagram.com/abhisek_subedi/" class="social-icon" aria-label="Instagram Profile"
+          ><svg viewBox="0 0 24 24">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg
+        ></a>
+        <a href="https://www.facebook.com/abishek.subedi.900" class="social-icon" aria-label="Facebook Profile"
+          ><svg viewBox="0 0 24 24">
+            <path
+              d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+            ></path></svg
+        ></a>
+        <a
+          href="mailto:abhisek.placeholder@domain.com"
+          class="social-icon"
+          aria-label="Secure Mail Link"
+          ><svg viewBox="0 0 24 24">
+            <path
+              d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+            ></path>
+            <polyline points="22,6 12,13 2,6"></polyline></svg
+        ></a>
+      </div>
+    </section>
+
+    <footer>
+      <p>
+        &copy; 2026 Abhisek Subedi. All rights are reserved.
+      </p>
+    </footer>
+
+    <script>
+      // 1. DYNAMIC INTERFACE THEME MANAGER
+      const themeToggle = document.getElementById("themeToggle");
+      const rootElement = document.documentElement;
+
+      const currentSavedTheme =
+        localStorage.getItem("portfolio-theme") || "dark";
+      rootElement.setAttribute("data-theme", currentSavedTheme);
+
+      themeToggle.addEventListener("click", () => {
+        const nextActiveTheme =
+          rootElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+        rootElement.setAttribute("data-theme", nextActiveTheme);
+        localStorage.setItem("portfolio-theme", nextActiveTheme);
+      });
+
+      // 2. MODAL CONTROLLERS (SCROLL LOCK INTEGRATED)
+      const openModalBtn = document.getElementById("openModalBtn");
+      const closeModalBtn = document.getElementById("closeModalBtn");
+      const modalOverlay = document.getElementById("modalOverlay");
+
+      function toggleModalState(displayState) {
+        if (displayState) {
+          modalOverlay.classList.add("active");
+          document.body.style.overflow = "hidden";
+        } else {
+          modalOverlay.classList.remove("active");
+          document.body.style.overflow = "";
+        }
+      }
+
+      openModalBtn.addEventListener("click", () => toggleModalState(true));
+      closeModalBtn.addEventListener("click", () => toggleModalState(false));
+      modalOverlay.addEventListener("click", (e) => {
+        if (e.target === modalOverlay) toggleModalState(false);
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modalOverlay.classList.contains("active"))
+          toggleModalState(false);
+      });
+
+      // 3. OPTIMIZED TYPING SIMULATION SYSTEM
+      const structuredKeywords = [
+  "Coding",
+  "Software Engineer",
+  "AI",
+  "Gym",
+  "Cricket",
+  "Developer",
+  "Editing",
+  "Hardware",
+  "Music",
+  "VibeCode",
+  "Web Development",
+  "Robotics",
+  "Engineering",
+  "Creative",
+  "Video",
+  "Fitness"
+];
+
+      let activeKeywordIndex = 0;
+      let activeCharIndex = 0;
+      let isReversingCycles = false;
+      const speedTypingDelay = 100;
+      const speedDeletionDelay = 50;
+      const holdPeriodInterval = 2000;
+      const targetOutputElement = document.getElementById("typedText");
+
+      function executeTypingEngine() {
+        const fullTargetString = structuredKeywords[activeKeywordIndex];
+
+        if (!isReversingCycles) {
+          targetOutputElement.textContent = fullTargetString.substring(
+            0,
+            activeCharIndex + 1,
+          );
+          activeCharIndex++;
+
+          if (activeCharIndex === fullTargetString.length) {
+            isReversingCycles = true;
+            setTimeout(executeTypingEngine, holdPeriodInterval);
+          } else {
+            setTimeout(executeTypingEngine, speedTypingDelay);
+          }
+        } else {
+          targetOutputElement.textContent = fullTargetString.substring(
+            0,
+            activeCharIndex - 1,
+          );
+          activeCharIndex--;
+
+          if (activeCharIndex === 0) {
+            isReversingCycles = false;
+            activeKeywordIndex =
+              (activeKeywordIndex + 1) % structuredKeywords.length;
+            setTimeout(executeTypingEngine, 400);
+          } else {
+            setTimeout(executeTypingEngine, speedDeletionDelay);
+          }
+        }
+      }
+      document.addEventListener("DOMContentLoaded", () =>
+        setTimeout(executeTypingEngine, 500),
+      );
+
+      // 4. CREATIVE KEYWORD WALL DEPLOYMENT SYSTEM
+      const wallSourceKeywords = [
+        { text: "Cricket", size: "2rem", weight: "700", opacity: "0.8" },
+        { text: "Apple", size: "1.5rem", weight: "500", opacity: "0.6" },
+        { text: "AI vibe", size: "2.5rem", weight: "700", opacity: "0.9" },
+        { text: "React", size: "3rem", weight: "700", opacity: "0.95" },
+        { text: "MERN", size: "2.2rem", weight: "700", opacity: "0.85" },
+        { text: "Nepal", size: "1.1rem", weight: "400", opacity: "0.3" },
+        { text: "Pokhara", size: "1.8rem", weight: "600", opacity: "0.7" },
+        { text: "Gym", size: "1.35rem", weight: "500", opacity: "0.4" },
+        { text: "Robotics", size: "2rem", weight: "700", opacity: "0.75" },
+        { text: "Hardware", size: "1.75rem", weight: "600", opacity: "0.6" },
+        { text: "Engineer", size: "2.75rem", weight: "700", opacity: "0.9" },
+        { text: "Developer", size: "2.5rem", weight: "700", opacity: "0.85" },
+        { text: "Builder", size: "1.5rem", weight: "600", opacity: "0.6" },
+        { text: "AWS", size: "2rem", weight: "700", opacity: "0.8" },
+        { text: "OOP", size: "1.6rem", weight: "600", opacity: "0.55" },
+        { text: "Problem", size: "1.85rem", weight: "500", opacity: "0.7" },
+        { text: "Spanish", size: "1.3rem", weight: "500", opacity: "0.45" },
+        { text: "DaVinci", size: "1.7rem", weight: "600", opacity: "0.65" },
+        { text: "Music", size: "1.4rem", weight: "400", opacity: "0.5" },
+        { text: "Robot", size: "2rem", weight: "700", opacity: "0.75" },
+        { text: "Chille", size: "1.25rem", weight: "400", opacity: "0.4" },
+        { text: "Hacker", size: "2.2rem", weight: "700", opacity: "0.8" },
+        { text: "LongHair", size: "1.5rem", weight: "500", opacity: "0.6" },
+        { text: "Bulk", size: "1.35rem", weight: "500", opacity: "0.4" },
+        { text: "Consultant", size: "1.8rem", weight: "600", opacity: "0.7" },
+        { text: "Advisor", size: "1.6rem", weight: "600", opacity: "0.55" },
+        { text: "Enthusiast", size: "1.4rem", weight: "500", opacity: "0.5" },
+        { text: "Skills", size: "1.5rem", weight: "500", opacity: "0.6" },
+        { text: "Learner", size: "1.2rem", weight: "400", opacity: "0.4" },
+        { text: "Take Bug", size: "1.7rem", weight: "600", opacity: "0.65" },
+        { text: "Glitch", size: "1.6rem", weight: "600", opacity: "0.55" },
+        { text: "Error 404", size: "2.8rem", weight: "700", opacity: "0.9" },
+      ];
+
+      const wallContainer = document.getElementById("keywordWall");
+
+      function populateCreativeWall() {
+        wallContainer.innerHTML = "";
+        const containerBoundsWidth = wallContainer.offsetWidth;
+        const containerBoundsHeight = wallContainer.offsetHeight;
+
+        wallSourceKeywords.forEach((item, index) => {
+          const spanNode = document.createElement("span");
+          spanNode.className = "floating-keyword";
+          spanNode.textContent = item.text;
+          spanNode.style.fontSize = item.size;
+          spanNode.style.fontWeight = item.weight;
+          spanNode.style.opacity = item.opacity;
+          spanNode.style.color =
+            index % 3 === 0 ? "var(--accent)" : "var(--text-primary)";
+
+          // Distinct non-overlapping distributed coordinates mapping
+          const calculatedLeft = (index % 4) * 23 + Math.random() * 6;
+          const calculatedTop = Math.floor(index / 4) * 18 + Math.random() * 5;
+
+          spanNode.style.left = `${calculatedLeft}%`;
+          spanNode.style.top = `${calculatedTop}%`;
+
+          // Varied custom delays to stagger uniform floating intervals
+          spanNode.style.animationDelay = `${index * -0.7}s`;
+          spanNode.style.animationDuration = `${15 + (index % 5) * 3}s`;
+
+          wallContainer.appendChild(spanNode);
+        });
+      }
+
+      populateCreativeWall();
+      window.addEventListener("resize", () => {
+        clearTimeout(window.resizeThresholdTimer);
+        window.resizeThresholdTimer = setTimeout(populateCreativeWall, 250);
+      });
+
+      // 5. HIGH-PERFORMANCE NATIVE SCROLL INTERSECTION OBSERVER
+      const structuralRevealOptions = {
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
+      };
+      const scrollRevealObserver = new IntersectionObserver(
+        (detectedEntries, observerInstance) => {
+          detectedEntries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("revealed");
+              observerInstance.unobserve(entry.target);
+            }
+          });
+        },
+        structuralRevealOptions,
+      );
+
+      document.querySelectorAll(".scroll-reveal").forEach((targetSection) => {
+        scrollRevealObserver.observe(targetSection);
+      });
+    </script>
+  </body>
+</html>
